@@ -1,12 +1,6 @@
 import React from 'react'
 
-type Props = {
-    params: Promise<{id: string}>
-}
-
-const Meeting = async({ params }: Props) => {
-  
-  const { id } = await params;
+const Personal_Room = () => {
   return (
     <section className='flex flex-col gap-10 size-full text-white'>
       <h1 className='text-3xl font-bold'></h1>
@@ -14,4 +8,4 @@ const Meeting = async({ params }: Props) => {
   )
 }
 
-export default Meeting;
+export default Personal_Room;
