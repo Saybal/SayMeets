@@ -132,6 +132,47 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.cl-userButtonPopoverActionButtonIcon {
+  color: white;
+}
+
+.cl-logoBox {
+  height: 40px;
+}
+.cl-dividerLine {
+  background: #252a41;
+  height: 2px;
+}
+
+.cl-socialButtonsIconButton {
+  border: 3px solid #565761;
+}
+
+.cl-internal-wkkub3 {
+  color: white;
+}
+.cl-userButtonPopoverActionButton {
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.cl-userButtonPopoverActionButton:hover {
+  background-color: #1C1F2E;
+  color: #0E78F9;
+}
+
+.cl-socialButtonsBlockButtonText{
+  color: white;
+}
+.cl-socialButtonsBlockButtonText__google{
+  color: #0E78F9;
+}
+
+
+/* .cl-userButtonPopoverActionButton:hover {
+  color: #1c1f2e;
+} */
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -150,4 +191,21 @@
 
 @utility flex-between {
   @apply flex justify-between;
+}
+
+@layer components {
+  .custom-input:focus {
+    border-color: white !important;
+    box-shadow: 0 0 0 1px white !important;
+  }
+
+  .custom-social-button {
+    /* border: 1px solid white !important; */
+    background: transparent !important;
+    color: white !important;
+  }
+
+  .custom-social-button:hover {
+    background: #1c1f2e !important;
+  }
 }
