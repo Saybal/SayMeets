@@ -63,6 +63,10 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@theme {
+  --background-image-hero: url('https://i.ibb.co.com/gCkQNJZ/Gemini-Generated-Image-lmv0eulmv0eulmv0.png');
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -166,6 +170,10 @@
 }
 .cl-socialButtonsBlockButtonText__google{
   color: #0E78F9;
+}
+
+.cl-badge{
+  color: #6CB4EE;
 }
 
 
