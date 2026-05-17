@@ -42,7 +42,7 @@ export default function RootLayout({
         <ClerkProvider
           appearance={{
             options: {
-              logoImageUrl: "/icons/yoom-logo.svg",
+              // logoImageUrl: "/icons/yoom-logo.svg",
               socialButtonsVariant: "iconButton",
             },
             variables: {
@@ -55,6 +55,7 @@ export default function RootLayout({
             },
 
             elements: {
+              logoBox: 'hidden',
               formFieldInput: {
                 borderColor: "#3A3A3A",
                 color: "#FFFFFF",
