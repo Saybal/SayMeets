@@ -1,16 +1,28 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { BsFillRecordCircleFill } from "react-icons/bs";
+import { BsClipboardCheckFill, BsFillRecordCircleFill } from "react-icons/bs";
 import { FaCalendarPlus } from "react-icons/fa";
 import { FaPlus, FaUserPlus } from "react-icons/fa6";
 import Meeting_Modal from "./Meeting_Modal";
 import { SiGooglemeet } from "react-icons/si";
 import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { toast } from "sonner";
+import { IoCreate } from "react-icons/io5";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import ReactDatePicker from 'react-datepicker' 
+
+const initialValues = {
+  date_time: new Date(),
+  description: '',
+  link: '',
+};
 
 const MettingTypeList = () => {
   const [Meeting_Type, setMeeting_Type] = useState<string | null>(null);
+  const [values, setValues] = useState(initialValues)
   const { user } = useUser();
   const client = useStreamVideoClient();
   const [callInfo, setCallInfo] = useState<{
@@ -76,7 +88,9 @@ const MettingTypeList = () => {
         </div>
         <span className="text-center text-sm sm:text-lg">Instant Meeting</span>
       </div>
-      <div className="flex flex-col items-center gap-2 cursor-pointer">
+      <div className="flex flex-col items-center gap-2 cursor-pointer"
+        onClick={() => handleClick("schedule-meeting")}
+      >
         <div className="w-16 h-16 rounded-xl bg-[#568203] flex items-center justify-center text-white text-2xl md:text-3xl font-bold">
           <FaCalendarPlus />
         </div>
@@ -97,6 +111,43 @@ const MettingTypeList = () => {
         </div>
         <span className="text-center text-sm sm:text-lg">View Records</span>
       </div>
+
+      {!calldetails ? (
+      <Meeting_Modal
+        isOpen={Meeting_Type === "schedule-meeting"}
+        icon={IoCreate}
+        onClose={() => setMeeting_Type(null)}
+          title="Create Meeting"
+          buttonText="Schedule a meeting"
+        handleClick={createMeeting}
+        >
+          <div className="flex flex-col gap-2.5">
+            <Label className="text-base text-normal leading-5.5">Add a description</Label>
+            <Textarea placeholder="Type your description here."
+              onChange={(e) => {
+              setValues({...values, description: e.target.value})
+            }}/>
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            <Label>Select Date  & Time</Label>
+            <ReactDatePicker/>
+          </div>
+      </Meeting_Modal>
+      ) : (
+        <Meeting_Modal
+        isOpen={Meeting_Type === "schedule-meeting"}
+        icon={BsClipboardCheckFill}
+        onClose={() => setMeeting_Type(null)}
+        title="Meeting Created"
+        className="text-center"
+        buttonText="Copy Meeting Link"
+            handleClick={() => {
+              // navigator.clipboard.writeText(meetinglink)
+              toast("Linked has been copied succesfully!!")
+            }}
+      />
+      )}
 
       <Meeting_Modal
         isOpen={Meeting_Type === "instant-meeting"}

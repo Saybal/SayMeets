@@ -16,8 +16,8 @@ type Props = {
   icon?: IconType;
   onClose: () => void;
   title: string;
-  className: string;
-  buttonText: string;
+  className?: string;
+  buttonText?: string;
   handleClick: () => void;
   children?: ReactNode;
 };
@@ -39,11 +39,11 @@ const Meeting_Modal = ({
           {Icon && (
                       <div className="w-full flex items-center justify-center">
                           <div className="border-2 border-white p-3 rounded-full">
-              <Icon className="text-3xl font-bold leading-10.5" />
+              <Icon className="text-3xl text-blue-1 font-bold leading-10.5" />
             </div>
             </div>
           )}
-          <div className={cn("text-3xl font-bold leading-10.5", className)}>
+          <div className={cn("text-3xl text-center font-bold leading-10.5", className)}>
             {title}
           </div>
           {children}
