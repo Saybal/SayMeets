@@ -13,16 +13,10 @@ import { IoCreate } from "react-icons/io5";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import ReactDatePicker from 'react-datepicker' 
-
-const initialValues = {
-  date_time: new Date(),
-  description: '',
-  link: '',
-};
+import { CalendarDays } from "lucide-react";
 
 const MettingTypeList = () => {
   const [Meeting_Type, setMeeting_Type] = useState<string | null>(null);
-  const [values, setValues] = useState(initialValues)
   const { user } = useUser();
   const client = useStreamVideoClient();
   const [callInfo, setCallInfo] = useState<{
@@ -76,6 +70,8 @@ const MettingTypeList = () => {
     }
   };
 
+  const meetinglink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${calldetails?.id}`
+
   const router = useRouter();
   return (
     <section className="flex items-center justify-center gap-6">
@@ -125,13 +121,23 @@ const MettingTypeList = () => {
             <Label className="text-base text-normal leading-5.5">Add a description</Label>
             <Textarea placeholder="Type your description here."
               onChange={(e) => {
-              setValues({...values, description: e.target.value})
+              setCallInfo({...callInfo, description: e.target.value})
             }}/>
           </div>
 
           <div className="flex flex-col gap-2.5">
             <Label>Select Date  & Time</Label>
-            <ReactDatePicker/>
+            <ReactDatePicker
+              selected={callInfo.date}
+              onChange={(date: Date | null) => { if (date) setCallInfo({ ...callInfo, date: date }) }}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              className="w-full rounded bg-dark-3 p-2 focus:outline-none"
+            />
+          
           </div>
       </Meeting_Modal>
       ) : (
@@ -143,7 +149,7 @@ const MettingTypeList = () => {
         className="text-center"
         buttonText="Copy Meeting Link"
             handleClick={() => {
-              // navigator.clipboard.writeText(meetinglink)
+              navigator.clipboard.writeText(meetinglink)
               toast("Linked has been copied succesfully!!")
             }}
       />

@@ -9,6 +9,7 @@ import {
 import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
+import "react-datepicker/dist/react-datepicker.css"
 import { Divide } from "lucide-react";
 
 const geistSans = Geist({
