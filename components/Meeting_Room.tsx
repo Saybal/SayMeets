@@ -36,11 +36,11 @@ const Meeting_Room = () => {
 
   const calllayout: string[] = ["grid", "speaker-left", "speaker-right"];
 
+  const callStatus = useCallCallingState();
+  if (callStatus !== CallingState.JOINED) return <Loader />;
+
   const MeetingLayout = () => {
 
-    const callingState = useCallCallingState();
-
-  if (callingState !== CallingState.JOINED) return <Loader />;
     switch (layout) {
       case "grid":
         return <PaginatedGridLayout />;
@@ -66,7 +66,7 @@ const Meeting_Room = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 w-full flex items-center justify-center gap-5">
+      <div className="fixed bottom-0 w-full flex items-center justify-center flex-wrap gap-5">
         <CallControls />
 
         <DropdownMenu>

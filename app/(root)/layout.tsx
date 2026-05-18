@@ -1,7 +1,17 @@
 import Stream_Video_Provider from '@/providers/StreamVideoClient';
+import { Metadata } from 'next';
 import React, { ReactNode } from 'react'
 
-const RootLayout = ({children}: {children: ReactNode}) => {
+  export const metadata: Metadata = {
+    title: "SayMeets",
+    description: "A video calling App",
+    icons: {
+      icon: '/icons/saymeets-icon.svg'
+    }
+  };
+
+const RootLayout = ({ children }: { children: ReactNode }) => {
+  
   return (
     <main>
       <Stream_Video_Provider>
