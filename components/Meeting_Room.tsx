@@ -1,9 +1,81 @@
-import React from 'react'
+import { cn } from "@/lib/utils";
+import {
+  CallControls,
+  CallParticipantsList,
+  PaginatedGridLayout,
+  SpeakerLayout,
+} from "@stream-io/video-react-sdk";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LayoutList } from "lucide-react";
+
+type MeetingLayoutType = "speaker-left" | "speaker-right" | "grid";
 
 const Meeting_Room = () => {
-  return (
-    <div>Meeting_Room</div>
-  )
-}
+  const [layout, setLayout] = useState<MeetingLayoutType>("speaker-left");
+  const [showparticipants, setShowparticipants] = useState<boolean>(false);
 
-export default Meeting_Room
+  const MeetingLayout = () => {
+    switch (layout) {
+      case "grid":
+        return <PaginatedGridLayout />;
+      case "speaker-left":
+        return <SpeakerLayout participantsBarPosition="right" />;
+      default:
+        return <SpeakerLayout participantsBarPosition="left" />;
+    }
+  };
+  return (
+    <div className="relative h-screen w-full text-white pt-4 overflow-hidden">
+      <div className="relative size-full flex items-center justify-center">
+        <div className="size-full max-w-250 flex items-center">
+          {MeetingLayout()}
+        </div>
+
+        <div
+          className={cn("h-[calc(100vh-86px)] hidden ml-2", {
+            "show-part": showparticipants,
+          })}
+        >
+          <CallParticipantsList onClose={() => setShowparticipants(false)} />
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 w-full flex items-center justify-center gap-5">
+        <CallControls />
+
+        <DropdownMenu>
+          <div className="flex items-center">
+            <DropdownMenuTrigger className="cursor-pointer rounded-2xl px-4 py-2 bg-[#19232d] hover:bg-[#4c535b]">
+              <LayoutList size={20} className="text-white"/>
+            </DropdownMenuTrigger>
+          </div>
+
+          <DropdownMenuContent className="bg-dark-1 border-dark-1 text-white">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+};
+
+export default Meeting_Room;

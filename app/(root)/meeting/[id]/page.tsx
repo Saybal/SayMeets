@@ -25,7 +25,7 @@ const Meeting = ({ params }: Props) => {
     <main className="h-screen w-full">
       <StreamCall call={call}>
         <StreamTheme>
-          {!setup ? (<Meeting_SetUp />) : (<Meeting_Room />)}
+          {!setup ? (<Meeting_SetUp setSetup={setSetup} />) : (<Meeting_Room />)}
 
         </StreamTheme>
       </StreamCall>
