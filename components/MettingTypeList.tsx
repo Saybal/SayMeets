@@ -8,12 +8,12 @@ import Meeting_Modal from "./Meeting_Modal";
 import { SiGooglemeet } from "react-icons/si";
 import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
-import { toast } from "sonner";
 import { IoCreate } from "react-icons/io5";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import ReactDatePicker from 'react-datepicker' 
 import { CalendarDays } from "lucide-react";
+import { toast } from "sonner";
 
 const MettingTypeList = () => {
   const [Meeting_Type, setMeeting_Type] = useState<string | null>(null);
@@ -65,6 +65,7 @@ const MettingTypeList = () => {
       if (!callInfo.description) {
         router.push(`/meeting/${call.id}`);
       }
+      
     } catch (error) {
       console.error("Error creating meeting:", error);
     }

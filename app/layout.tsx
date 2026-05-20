@@ -11,6 +11,7 @@ import "./globals.css";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import "react-datepicker/dist/react-datepicker.css"
 import { Divide } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,6 +91,7 @@ export default function RootLayout({
           }}
         >
           {children}
+          <Toaster className="bg-dark-4 text-white" />
         </ClerkProvider>
       </body>
     </html>
