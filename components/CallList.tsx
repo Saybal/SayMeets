@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import MeetingCard from "./MeetingCard";
 import Loader from "./Loader";
+import { toast } from "sonner";
 
 const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
   const { loading, endedCall, upcomingCall, callrecordings } = useGetCalls();
@@ -38,7 +39,8 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
 
   useEffect(() => {
     const getRecordings = async () => {
-      const callData = await Promise.all(
+      try {
+        const callData = await Promise.all(
         callrecordings?.map((meeting) => meeting.listRecordings()) ?? [],
       );
 
@@ -47,6 +49,10 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         .flatMap((call) => call.recordings);
 
       setRecordings(recordings);
+      } catch (error) {
+        console.log(error)
+        toast("Too many requested!! Please try again later..")
+      }
     };
     if (type === "recordings") getRecordings();
   }, [type, callrecordings]);
@@ -70,11 +76,11 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
                   : "/icons/recordings.svg"
             }
             title={
-              (meeting as Call).state.custom.description.substring(0, 26) ||
+              (meeting as Call).state?.custom.description.substring(0, 26) || (meeting as CallRecording).filename.substring(0,20) ||
               "No Description"
             }
             date={
-              (meeting as Call).state.startsAt?.toLocaleString() ||
+              (meeting as Call).state?.startsAt?.toLocaleString() ||
               (meeting as CallRecording).start_time.toLocaleLowerCase()
             }
             isPreviousMeeting={type === "ended"}
