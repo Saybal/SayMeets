@@ -2,7 +2,7 @@
 import { useGetCalls } from "@/hooks/useGetCalls";
 import { Call, CallRecording } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MeetingCard from "./MeetingCard";
 import Loader from "./Loader";
 
@@ -36,13 +36,28 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
     }
   };
 
+  useEffect(() => {
+    const getRecordings = async () => {
+      const callData = await Promise.all(
+        callrecordings?.map((meeting) => meeting.listRecordings()) ?? [],
+      );
+
+      const recordings = callData
+        .filter((call) => call.recordings.length > 0)
+        .flatMap((call) => call.recordings);
+
+      setRecordings(recordings);
+    };
+    if (type === "recordings") getRecordings();
+  }, [type, callrecordings]);
+
   const calls = getCalls();
   const noCalls = getNoCalls();
 
   if (loading) return <Loader />;
 
   return (
-    <section className="grid grid-cols-1 gap-5 lg:grid-cols-5">
+    <section className="grid grid-cols-1 gap-5 xl:grid-cols-2">
       {calls && calls.length > 0 ? (
         calls.map((meeting: Call | CallRecording) => (
           <MeetingCard
@@ -78,7 +93,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
           />
         ))
       ) : (
-        <h1>{noCalls}</h1>
+        <h1 className="text-2xl font-bold text-white">{noCalls}</h1>
       )}
     </section>
   );

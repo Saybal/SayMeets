@@ -12,10 +12,11 @@ import { IoCreate } from "react-icons/io5";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import ReactDatePicker from 'react-datepicker' 
-import { CalendarDays } from "lucide-react";
 import { toast } from "sonner";
+import Loader from "./Loader";
 
 const MettingTypeList = () => {
+  const router = useRouter();
   const [Meeting_Type, setMeeting_Type] = useState<string | null>(null);
   const { user } = useUser();
   const client = useStreamVideoClient();
@@ -49,6 +50,8 @@ const MettingTypeList = () => {
 
       const starting_time =
         callInfo.date.toISOString() || new Date().toISOString();
+      
+      console.log('Starting Time: ', starting_time)
       const description = callInfo.description || "Instant Meeting";
 
       await call.getOrCreate({
@@ -71,9 +74,11 @@ const MettingTypeList = () => {
     }
   };
 
+  if(!client || !user) return <Loader/>
+
   const meetinglink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${calldetails?.id}`
 
-  const router = useRouter();
+  
   return (
     <section className="flex items-center justify-center gap-6">
       <div
@@ -130,7 +135,7 @@ const MettingTypeList = () => {
             <Label>Select Date  & Time</Label>
             <ReactDatePicker
               selected={callInfo.date}
-              onChange={(date: Date | null) => { if (date) setCallInfo({ ...callInfo, date: date }) }}
+              onChange={(date: Date | null) => { if (date) setCallInfo({ ...callInfo, date: date! }) }}
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={15}

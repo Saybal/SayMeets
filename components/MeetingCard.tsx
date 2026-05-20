@@ -28,10 +28,10 @@ const MeetingCard = ({
   link,
   buttonText,
 }: MeetingCardProps) => {
-//   const { toast } = useToast();
+  //   const { toast } = useToast();
 
   return (
-    <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-[568px]">
+    <section className="flex min-h-64.5 w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-142">
       <article className="flex flex-col gap-5">
         <Image src={icon} alt="upcoming" width={28} height={28} />
         <div className="flex justify-between">
@@ -41,8 +41,8 @@ const MeetingCard = ({
           </div>
         </div>
       </article>
-      <article className={cn("flex justify-center relative", {})}>
-        <div className="relative flex w-full max-sm:hidden">
+      <article className={cn("flex justify-between relative", {})}>
+        <div className="hidden sm:flex items-center">
           {avatarImages.map((img, index) => (
             <Image
               key={index}
@@ -50,11 +50,14 @@ const MeetingCard = ({
               alt="attendees"
               width={40}
               height={40}
-              className={cn("rounded-full", { absolute: index > 0 })}
-              style={{ top: 0, left: index * 28 }}
+              className={cn(
+                "rounded-full border-2 border-dark-1",
+                index > 0 && "-ml-3",
+              )}
             />
           ))}
-          <div className="flex-center absolute left-[136px] size-10 rounded-full border-[5px] border-dark-3 bg-dark-4">
+
+          <div className="flex-center -ml-3 size-10 rounded-full border-2 border-dark-3 bg-dark-4 text-sm font-semibold">
             +5
           </div>
         </div>
@@ -69,7 +72,7 @@ const MeetingCard = ({
             <Button
               onClick={() => {
                 navigator.clipboard.writeText(link);
-                toast("link Copied")
+                toast("link Copied");
               }}
               className="bg-dark-4 px-6"
             >
