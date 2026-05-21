@@ -1,3 +1,4 @@
+import CallList from "@/components/CallList";
 import MettingTypeList from "@/components/MettingTypeList";
 import ShinyText from "@/reactbits/ShinyText";
 import React from "react";
@@ -93,6 +94,12 @@ const Home = () => {
       </div>
 
       <MettingTypeList/>
+
+      {/* TOday's Upcoming Meeting */}
+      <div className="flex flex-col gap-5 w-full">
+        <h1 className="text-white font-bold text-2xl">Today's Upcoming Meeting</h1>
+        <CallList type="today-upcoming"/>
+      </div>
     </section>
   );
 };

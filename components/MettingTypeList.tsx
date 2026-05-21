@@ -11,9 +11,10 @@ import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { IoCreate } from "react-icons/io5";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import ReactDatePicker from 'react-datepicker' 
+import ReactDatePicker from "react-datepicker";
 import { toast } from "sonner";
 import Loader from "./Loader";
+import { Input } from "./ui/input";
 
 const MettingTypeList = () => {
   const router = useRouter();
@@ -21,11 +22,11 @@ const MettingTypeList = () => {
   const { user } = useUser();
   const client = useStreamVideoClient();
   const [callInfo, setCallInfo] = useState<{
-    date: Date;
+    date_time: Date;
     description: string;
     link: string;
   }>({
-    date: new Date(),
+    date_time: new Date(),
     description: "",
     link: "",
   });
@@ -48,15 +49,23 @@ const MettingTypeList = () => {
         throw new Error("Failed to create call");
       }
 
-      const starting_time =
-        callInfo.date.toISOString() || new Date().toISOString();
-      
-      console.log('Starting Time: ', starting_time)
+      const startsAt =
+        callInfo.date_time.toISOString() || new Date().toISOString();
+      // const startsAt =
+      //   new Date(Date.now() + 30 * 60 * 1000);
+      // const starting_time =
+      //   callInfo.date;
+      // const starting_time = new Date(
+      //   callInfo.date.getTime() - callInfo.date.getTimezoneOffset() * 60000,
+      // ).toISOString();
+
+      // console.log("Starting Time: ", starting_time);
       const description = callInfo.description || "Instant Meeting";
 
+    
       await call.getOrCreate({
         data: {
-          starts_at: starting_time,
+          starts_at: startsAt ,
           custom: {
             description,
           },
@@ -68,17 +77,15 @@ const MettingTypeList = () => {
       if (!callInfo.description) {
         router.push(`/meeting/${call.id}`);
       }
-      
     } catch (error) {
       console.error("Error creating meeting:", error);
     }
   };
 
-  if(!client || !user) return <Loader/>
+  if (!client || !user) return <Loader />;
 
-  const meetinglink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${calldetails?.id}`
+  const meetinglink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${calldetails?.id}`;
 
-  
   return (
     <section className="flex items-center justify-center gap-6">
       <div
@@ -90,7 +97,8 @@ const MettingTypeList = () => {
         </div>
         <span className="text-center text-sm sm:text-lg">Instant Meeting</span>
       </div>
-      <div className="flex flex-col items-center gap-2 cursor-pointer"
+      <div
+        className="flex flex-col items-center gap-2 cursor-pointer"
         onClick={() => handleClick("schedule-meeting")}
       >
         <div className="w-16 h-16 rounded-xl bg-[#568203] flex items-center justify-center text-white text-2xl md:text-3xl font-bold">
@@ -98,7 +106,10 @@ const MettingTypeList = () => {
         </div>
         <span className="text-center text-sm sm:text-lg">Schedule Meeting</span>
       </div>
-      <div className="flex flex-col items-center gap-2 cursor-pointer">
+      <div
+        className="flex flex-col items-center gap-2 cursor-pointer"
+        onClick={() => handleClick("join-meeting")}
+      >
         <div className="w-16 h-16 rounded-xl bg-[#0D98BA] flex items-center justify-center text-white text-2xl md:text-3xl font-bold">
           <FaUserPlus />
         </div>
@@ -115,50 +126,65 @@ const MettingTypeList = () => {
       </div>
 
       {!calldetails ? (
-      <Meeting_Modal
-        isOpen={Meeting_Type === "schedule-meeting"}
-        icon={IoCreate}
-        onClose={() => setMeeting_Type(null)}
+        <Meeting_Modal
+          isOpen={Meeting_Type === "schedule-meeting"}
+          icon={IoCreate}
+          onClose={() => setMeeting_Type(null)}
           title="Create Meeting"
           buttonText="Schedule a meeting"
-        handleClick={createMeeting}
+          handleClick={createMeeting}
         >
           <div className="flex flex-col gap-2.5">
-            <Label className="text-base text-normal leading-5.5">Add a description</Label>
-            <Textarea placeholder="Type your description here."
+            <Label className="text-base text-normal leading-5.5">
+              Add a description
+            </Label>
+            <Textarea
+              placeholder="Type your description here."
               onChange={(e) => {
-              setCallInfo({...callInfo, description: e.target.value})
-            }}/>
+                setCallInfo({ ...callInfo, description: e.target.value });
+              }}
+            />
           </div>
 
           <div className="flex flex-col gap-2.5">
-            <Label>Select Date  & Time</Label>
+            <Label>Select Date & Time</Label>
             <ReactDatePicker
-              selected={callInfo.date}
-              onChange={(date: Date | null) => { if (date) setCallInfo({ ...callInfo, date: date! }) }}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="MMMM d, yyyy h:mm aa"
-              className="w-full rounded bg-dark-3 p-2 focus:outline-none"
-            />
-          
+  selected={callInfo.date_time}
+  onChange={(date: Date | null) => {
+    if (date) {
+      console.log("Picked:", date);
+      setCallInfo({ ...callInfo, date_time: date });
+    }
+  }}
+  showTimeSelect
+  timeFormat="HH:mm"
+  timeIntervals={15}
+  timeCaption="time"
+  dateFormat="MMMM d, yyyy h:mm aa"
+  minDate={new Date()}
+  minTime={
+    callInfo.date_time.toDateString() === new Date().toDateString()
+      ? new Date()
+      : new Date(0, 0, 0, 0, 0)
+  }
+  maxTime={new Date(0, 0, 0, 23, 45)}
+  className="w-full rounded bg-dark-3 p-2 focus:outline-none"
+/>
           </div>
-      </Meeting_Modal>
+        </Meeting_Modal>
       ) : (
         <Meeting_Modal
-        isOpen={Meeting_Type === "schedule-meeting"}
-        icon={BsClipboardCheckFill}
-        onClose={() => setMeeting_Type(null)}
-        title="Meeting Created"
-        className="text-center"
-        buttonText="Copy Meeting Link"
-            handleClick={() => {
-              navigator.clipboard.writeText(meetinglink)
-              toast("Linked has been copied succesfully!!")
-            }}
-      />
+          isOpen={Meeting_Type === "schedule-meeting"}
+          icon={BsClipboardCheckFill}
+          onClose={() => setMeeting_Type(null)}
+          title="Meeting Created"
+          className="text-center"
+          buttonText="Copy Meeting Link"
+          handleClick={() => {
+            navigator.clipboard.writeText(meetinglink);
+            toast("Linked has been copied succesfully!!");
+          }}
+        />
       )}
 
       <Meeting_Modal
@@ -170,6 +196,23 @@ const MettingTypeList = () => {
         buttonText="Start Meeting"
         handleClick={createMeeting}
       />
+      <Meeting_Modal
+        isOpen={Meeting_Type === "join-meeting"}
+        icon={SiGooglemeet}
+        onClose={() => setMeeting_Type(null)}
+        title="Join a new meeting"
+        className="text-center"
+        buttonText="Join Meeting"
+        handleClick={() => router.push(callInfo.link)}
+      >
+        <Label className="text-gray-400">Type or paste the meeting link</Label>
+        <Input
+          placeholder="Meeting link"
+          onChange={(e) => {
+            setCallInfo({ ...callInfo, link: e.target.value });
+          }}
+        />
+      </Meeting_Modal>
     </section>
   );
 };

@@ -17,16 +17,15 @@ export const useGetCalls = () => {
         const { calls } = await client.queryCalls({
           sort: [{ field: "starts_at", direction: -1 }],
           filter_conditions: {
-              starts_at: { $exists: true },
-              $or: [
-                  { created_by_user_id: user.id },
-                  { members: { $in: [user.id] } }
-                  
-            ]
+            starts_at: { $exists: true },
+            $or: [
+              { created_by_user_id: user.id },
+              { members: { $in: [user.id] } },
+            ],
           },
         });
-          
-          setCalls(calls)
+
+        setCalls(calls);
       } catch (error) {
         console.log(error);
       } finally {
@@ -35,25 +34,26 @@ export const useGetCalls = () => {
     };
 
     loadCalls();
-
   }, [client, user?.id]);
-    
-    const now = new Date();
 
-    const endedCall = calls?.filter(({ state: {
-        startedAt, endedAt
-    } } : Call) => {
-        return (startedAt && new Date(startedAt) < now || !!endedAt)
-    });
+  const now = new Date();
 
-    const upcomingCall = calls?.filter(({ state: { startsAt } } : Call) => {
-        return (startsAt && new Date(startsAt) > now)
-    });
+  const endedCall = calls?.filter(({ state: { startedAt, endedAt } }: Call) => {
+    return (startedAt && new Date(startedAt) < now) || !!endedAt;
+  });
 
-    return {
-        loading,
-        endedCall,
-        upcomingCall,
-        callrecordings: calls
-    }
+  const upcomingCall = calls?.filter(({ state: { startsAt } }: Call) => {
+    return startsAt && new Date(startsAt) > now;
+  });
+  const today_upcomingCall = calls?.filter(({ state: { startsAt } }: Call) => {
+    return startsAt && new Date(startsAt) === now;
+  });
+
+  return {
+    loading,
+    endedCall,
+    upcomingCall,
+    today_upcomingCall,
+    callrecordings: calls,
+  };
 };

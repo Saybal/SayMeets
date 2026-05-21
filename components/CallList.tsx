@@ -7,8 +7,8 @@ import MeetingCard from "./MeetingCard";
 import Loader from "./Loader";
 import { toast } from "sonner";
 
-const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
-  const { loading, endedCall, upcomingCall, callrecordings } = useGetCalls();
+const CallList = ({ type }: { type: "ended" | "upcoming" | "today-upcoming" | "recordings" }) => {
+  const { loading, endedCall, upcomingCall, today_upcomingCall, callrecordings } = useGetCalls();
   const router = useRouter();
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
 
@@ -20,6 +20,8 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         return recordings;
       case "upcoming":
         return upcomingCall;
+      case "today-upcoming":
+        return today_upcomingCall;
       default:
         return [];
     }
@@ -32,6 +34,14 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         return "No Recordings";
       case "upcoming":
         return "No Upcoming Calls";
+      case "today-upcoming":
+        return (
+          <div className="w-full h-25 flex items-center justify-center bg-dark-1 rounded-xl border-2 border-gray-500">
+            <h1 className="text-lg text-white">
+              Your schedule is free!!
+            </h1>
+          </div>
+        );
       default:
         return "";
     }
@@ -63,7 +73,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
   if (loading) return <Loader />;
 
   return (
-    <section className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+    <section className={`${ calls && calls.length > 0 ? "grid grid-cols-1 gap-5 xl:grid-cols-2" : "w-full"}`}>
       {calls && calls.length > 0 ? (
         calls.map((meeting: Call | CallRecording) => (
           <MeetingCard
