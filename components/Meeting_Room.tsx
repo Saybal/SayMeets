@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LayoutList, Users } from "lucide-react";
 import Loader from "./Loader";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EndCallButton from "./EndCallButton";
 
 type MeetingLayoutType = "speaker-left" | "speaker-right" | "grid";
@@ -30,6 +30,7 @@ const Meeting_Room = () => {
   const [layout, setLayout] = useState<MeetingLayoutType>("speaker-left");
   const [showparticipants, setShowparticipants] = useState<boolean>(false);
   const { useCallCallingState } = useCallStateHooks();
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const isPersonalRoom = !!searchParams.get('personal');
@@ -67,7 +68,7 @@ const Meeting_Room = () => {
       </div>
 
       <div className="fixed bottom-0 w-full flex items-center justify-center flex-wrap gap-5">
-        <CallControls />
+        <CallControls onLeave={() => router.push('/')}/>
 
         <DropdownMenu>
           <div className="flex items-center">

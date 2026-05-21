@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useGetCallByID } from "@/hooks/useGetCallByID";
 import { useUser } from "@clerk/nextjs";
 import { useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
@@ -31,7 +32,8 @@ const Personal_Room = () => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${user?.id}?personal=true` ||
     "";
   const { call } = useGetCallByID(user?.id);
-  const client = useStreamVideoClient()
+  const client = useStreamVideoClient();
+  const router = useRouter()
   
   const createRoom = async () => {
 
@@ -47,6 +49,7 @@ const Personal_Room = () => {
         },
       });
     }
+    router.push(`/meeting/${user?.id}?personal=true`)
     
   };
   return (
