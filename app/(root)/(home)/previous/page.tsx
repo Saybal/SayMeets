@@ -1,16 +1,51 @@
 import CallList from '@/components/CallList';
 import React from 'react'
+import { BiSolidSkipPreviousCircle } from "react-icons/bi";
 
 const Previous = () => {
   return (
-    <section className='flex flex-col size-full gap-10 text-white'>
-      <h1 className='text-3xl font-bold'>
-        Previous
-      </h1>
+    <section className='size-full flex flex-col gap-8 text-white'>
 
-      <CallList type='ended'/>
-   </section>
-  )
-}
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 shrink-0">
+            <BiSolidSkipPreviousCircle className="w-6 h-6 text-sky-400" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white leading-tight">
+              Previous Meetings
+            </h1>
+            <p className="text-white/35 text-sm mt-0.5">
+              Your previous sessions
+            </p>
+          </div>
+        </div>
+
+        {/* Section label */}
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] self-start sm:self-auto">
+          <span className="relative flex w-1.5 h-1.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-60" />
+            <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-sky-400" />
+          </span>
+          <span className="text-sky-400 text-xs font-medium tracking-wide">Previous</span>
+        </div>
+      </div>
+
+      {/* Divider with label */}
+      <div className="flex items-center gap-3">
+        <div className="w-1 h-4 rounded-full bg-sky-500" />
+        <span className="text-white/40 text-xs font-semibold uppercase tracking-widest">
+          All Previous Meeting
+        </span>
+        <div className="flex-1 h-px bg-white/[0.06]" />
+      </div>
+
+      {/* Meeting list */}
+      <CallList type="ended" />
+
+    </section>
+  );
+};
 
 export default Previous;

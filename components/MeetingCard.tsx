@@ -105,7 +105,8 @@ interface MeetingCardProps {
   title: string;
   date: string;
   icon: string;
-  isPreviousMeeting?: boolean;
+  MeetingType?: string;
+  isPreviousMeeting: boolean
   buttonIcon1?: string;
   buttonText?: string;
   handleClick: () => void;
@@ -116,6 +117,7 @@ const MeetingCard = ({
   icon,
   title,
   date,
+  MeetingType,
   isPreviousMeeting,
   buttonIcon1,
   handleClick,
@@ -142,14 +144,14 @@ const MeetingCard = ({
           </div>
 
           {/* Status badge */}
-          {isPreviousMeeting ? (
+          {MeetingType === 'ended' ? (
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08]">
               <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
               <span className="text-white/40 text-[11px] font-medium tracking-wide">
                 Ended
               </span>
             </span>
-          ) : (
+          ) : MeetingType === 'upcoming' ? (
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
               <span className="relative flex w-1.5 h-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
@@ -159,7 +161,16 @@ const MeetingCard = ({
                 Upcoming
               </span>
             </span>
-          )}
+          ) : 
+          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-emerald-400" />
+              </span>
+              <span className="text-emerald-400 text-[11px] font-medium tracking-wide">
+                Recording
+              </span>
+            </span> }
         </div>
 
         {/* Title + date */}

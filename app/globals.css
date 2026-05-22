@@ -176,6 +176,15 @@
   color: #6CB4EE;
 }
 
+/* For video Preview */
+.str-video__video-preview-container {
+  width: 100% !important;
+  height: 375px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 
 /* .cl-userButtonPopoverActionButton:hover {
   color: #1c1f2e;
