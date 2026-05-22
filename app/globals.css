@@ -175,7 +175,9 @@
 .cl-badge{
   color: #6CB4EE;
 }
-
+/* .cl-internal-biqd9y {
+  display: none;
+} */
 /* For video Preview */
 .str-video__video-preview-container {
   width: 100% !important;
@@ -184,6 +186,8 @@
   justify-content: center !important;
   align-items: center !important;
 }
+
+
 
 
 /* .cl-userButtonPopoverActionButton:hover {
