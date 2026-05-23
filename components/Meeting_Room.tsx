@@ -74,7 +74,7 @@ const Meeting_Room = () => {
     return (
       <div className="h-screen w-screen bg-black">
         <SpeakerLayout
-          participantsBarPosition="none"
+          participantsBarPosition={null}
         />
       </div>
     );
