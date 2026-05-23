@@ -1,20 +1,50 @@
+'use client'
 import CallList from "@/components/CallList";
 import MettingTypeList from "@/components/MettingTypeList";
 import ShinyText from "@/reactbits/ShinyText";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Home = () => {
-  const now = new Date();
-  const time = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const date = now.toLocaleDateString([], {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  // const now = new Date();
+  // const time = now.toLocaleTimeString([], {
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  // });
+  // const date = now.toLocaleDateString([], {
+  //   weekday: "long",
+  //   day: "numeric",
+  //   month: "long",
+  //   year: "numeric",
+  // });
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+
+      const formattedTime = now.toLocaleTimeString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const formattedDate = now.toLocaleDateString(undefined, {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+
+      setTime(formattedTime);
+      setDate(formattedDate);
+    };
+
+    updateTime(); // initial run
+
+    const interval = setInterval(updateTime, 1000); // update every second
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="flex flex-col gap-8 size-full text-white">
