@@ -10,7 +10,7 @@
 [![Clerk](https://img.shields.io/badge/Auth-Clerk-6C47FF?logo=clerk)](https://clerk.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38BDF8?logo=tailwindcss)](https://tailwindcss.com/)
 
-[Live Demo](#-demo) · [Features](#-features) · [Tech Stack](#-tech-stack) · [Getting Started](#-getting-started)
+[Live Demo](https://say-meets.vercel.app/) · [Features](#features) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started)
 
 </div>
 
@@ -24,11 +24,11 @@ Most video conferencing tools are either too heavyweight to build upon, or too m
 
 ## Demo
 
-> 🎥 **Live Demo:** `https://say-meets.vercel.app` *(replace with your deployment URL)*
+> 🎥 **Live Demo:** `https://say-meets.vercel.app` 
 
 | Home Dashboard | Pre-join Setup | Live Meeting Room |
 |---|---|---|
-| ![Home](https://placehold.co/360x200/0B1120/ffffff?text=Home+Dashboard) | ![Setup](https://placehold.co/360x200/0B1120/ffffff?text=Pre-Join+Setup) | ![Room](https://placehold.co/360x200/0B1120/ffffff?text=Live+Meeting) |
+| ![Home](https://i.ibb.co.com/HLtnkWjs/image.png) | ![Setup](https://i.ibb.co.com/7xjxLTn0/image.png) | ![Room](https://i.ibb.co.com/bj8JHbg9/image.png) |
 
 ---
 
@@ -39,6 +39,7 @@ Most video conferencing tools are either too heavyweight to build upon, or too m
 - **Scheduled meetings** — book ahead with a date/time picker and invite link
 - **Personal room** — a persistent, always-available meeting room tied to your account
 - **Join via link** — paste any meeting URL or ID to join an existing session
+- **Recordings** — Watch recordings of previous sessions.
 
 **In-Call Experience**
 - Multiple layout modes: Grid, Speaker Left, and Speaker Right — switchable mid-call
@@ -84,10 +85,10 @@ Most video conferencing tools are either too heavyweight to build upon, or too m
 
 ```
 ┌─────────────────────────────────────────┐
-│            Next.js App Router            │
+│            Next.js App Router           │
 │  ┌─────────────┐  ┌────────────────────┐│
 │  │  (auth)     │  │       (root)       ││
-│  │  /sign_in   │  │  /          Home   ││
+│  │  /sign_in   │  │  /Home             ││
 │  │  /sign_up   │  │  /upcoming         ││
 │  └─────────────┘  │  /previous         ││
 │                   │  /recordings       ││
@@ -97,8 +98,8 @@ Most video conferencing tools are either too heavyweight to build upon, or too m
 └────────────────┬────────────────────────┘
                  │
        ┌─────────▼──────────┐
-       │  Stream_Video_      │  ← Context provider wrapping
-       │  Provider           │    authenticated subtree
+       │  Stream_Video_     │  ← Context provider wrapping
+       │  Provider          │    authenticated subtree
        └─────────┬──────────┘
                  │
     ┌────────────▼────────────────────┐
@@ -127,8 +128,8 @@ Most video conferencing tools are either too heavyweight to build upon, or too m
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/zoom-clone.git
-cd zoom-clone
+git clone https://github.com/Saybal/SayMeets.git
+cd saymeets
 ```
 
 ### 2. Install dependencies
@@ -220,7 +221,7 @@ zoom-clone/
 - [ ] Screen sharing controls
 - [ ] Meeting waiting room / host admit gate
 - [ ] Calendar integration for scheduled meetings
-- [ ] Email notifications for upcoming meetings
+<!-- - [ ] Email notifications for upcoming meetings -->
 
 ---
 
@@ -228,16 +229,9 @@ zoom-clone/
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
 
----
-
-## License
-
-[MIT](LICENSE)
-
----
 
 <div align="center">
 
-Built by **[Your Name]** · [Portfolio](https://yourportfolio.com) · [LinkedIn](https://linkedin.com/in/yourhandle) · [GitHub](https://github.com/your-username)
+Built by **Saybal Roy** · [Portfolio](https://saybal-roy-portfolio.netlify.app/) · [LinkedIn](https://www.linkedin.com/in/saybal-roy/) · [GitHub](https://github.com/Saybal)
 
 </div>
