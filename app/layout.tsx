@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     icon: '/icons/saymeets-icon.svg'
   },
   other: {
-    "google-site-verification" : `${process.env.GOOGLE_SITE_VERIFICATON}`
+    "google-site-verification" : "AAgZDmTnoamwqHZZDKgYaufhJuDU5nA0jC_s5KLGm5s"
   }
 };
 
