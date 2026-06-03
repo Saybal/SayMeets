@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   description: "A video calling App",
   icons: {
     icon: '/icons/saymeets-icon.svg'
+  },
+  other: {
+    "google-site-verification" : `${process.env.GOOGLE_SITE_VERIFICATON}`
   }
 };
 
